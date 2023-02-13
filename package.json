@@ -1,0 +1,40 @@
+{
+  "name": "analizadorrips",
+  "version": "1.0.0",
+  "description": "rips analizer",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.ts",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edisonr17/analizador_rips.git"
+  },
+  "keywords": [
+    "rips",
+    "cups",
+    "salud"
+  ],
+  "author": "edison Rave",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edisonr17/analizador_rips/issues"
+  },
+  "homepage": "https://github.com/edisonr17/analizador_rips#readme",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "alasql": "^3.1.0",
+    "axios": "^1.3.2",
+    "data-forge": "^1.9.6",
+    "data-forge-fs": "^0.0.9",
+    "express": "^4.18.2",
+    "jest": "^29.4.2",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "tslint": "^6.1.3",
+    "typescript-tslint-plugin": "^1.0.2"
+  }
+}

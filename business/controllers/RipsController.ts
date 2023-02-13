@@ -25,6 +25,8 @@ export class RipsController {
         this.objRips.US = await this.readFiles.getDataFromFileForge('./files/rips/US005312.txt', []);
 
         var res = await alasql("SELECT [6], count([6]) FROM ? group by [6] ",[this.objRips.AC]);
+
+
         console.log(res);
 
     }

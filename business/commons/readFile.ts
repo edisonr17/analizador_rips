@@ -1,7 +1,6 @@
 const fs = require('fs');
 const dataForge = require('data-forge-fs'); // For readFile/writeFile.
 var Excel = require('exceljs');
-var workbook = new Excel.Workbook();
 export class ReadFiles {
   constructor() {
 
@@ -26,6 +25,7 @@ export class ReadFiles {
   ///Método para leer datos de un archivo tipo xlsx
   readXLSX = async (filepath: string, page: number, initialRow: number) => new Promise(async function (resolve, reject) {
     console.log("____________________CREANDO ARCHIVOS DE EXCEL______________");
+    var workbook = new Excel.Workbook();
 
     workbook["xlsx"].readFile(filepath).then(async function () {
       let worksheet = workbook.getWorksheet(page);
@@ -43,45 +43,38 @@ export class ReadFiles {
 
   });
 
-  escribirExcelGenerico =async (formatoOrigen: string, formatoSalida: string, datos: any, pagina = 1) =>  {
-    await  this.readExcel(formatoOrigen, formatoSalida, datos, pagina);
-    return true;
-  };
 
 
 
 
-
-
-  //let motorBDarchivo = file.split("_")[0];
-
-  readExcel = async (formatoOrigen: string, formatoSalida: string, datos: any, pagina: number) => {
-
-
-    console.log(formatoOrigen, formatoSalida, pagina)
-    //console.log(regimenesEncontrados)
-
-    //You can use the absolute path also
-    let filepath = formatoOrigen;
-    let workbook =await new Excel.Workbook();
-    await workbook.xlsx.readFile(filepath);
-  
-    //You can use the index number also eg. 0 for selecting the sheet
-
-    let worksheet = await workbook.getWorksheet("pag1");
-   
-    //console.log(formatoSalida, datos);
+  /**
+   * Llenamos el formato de excel para savia
+   */
+  escribirExcelGenerico = (formatoOrigen: string, formatoSalida: string, datos: any, pagina = 1) => new Promise(async function (resolve, reject) {
+    
+    let workbook = new Excel.Workbook();
+		await workbook.xlsx.readFile(formatoOrigen);
+		let worksheet = await workbook.getWorksheet(pagina);
+    
+    let indRow = 1 ;
     for (const element of datos) {
-      await worksheet.addRow(element).commit();
-    }
+      indRow++ ; 
+      let rows:any = await worksheet.getRow(indRow);
+      
+      rows.getCell(1).value  = element.codigo;
+      rows.getCell(2).value  = element.name;
+      rows.getCell(3).value  = element.conteo;
 
-
-    //console.log(tiposCitas);
-
-
+      rows.commit();
+      //await worksheet.addRow(Object.values(element)).commit();
+		}
     await workbook.xlsx.writeFile(formatoSalida);
-    return true;
-  }
+    resolve("") ;
+
+  });
+
+
+
 
 }
 
